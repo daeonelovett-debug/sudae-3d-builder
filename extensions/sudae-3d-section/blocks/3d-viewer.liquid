@@ -1,3 +1,182 @@
+<<<<<<< HEAD
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+{% assign config = block.settings %}
+
+<div class="sudae-3d-viewer-block" data-block-id="{{ block.id }}">
+  {% if config.model_url %}
+    <model-viewer 
+      id="sudae-viewer-{{ block.id }}"
+      src="{{ config.model_url }}" 
+      ar 
+      ar-modes="webxr scene-viewer quick-look" 
+      camera-controls 
+      touch-action="pan-y"
+      auto-rotate
+      style="width: 100%; height: {{ config.viewer_height | default: 500 }}px;">
+      
+      <button slot="ar-button" class="sudae-ar-button">👋 View in your room</button>
+    </model-viewer>
+
+    <div class="sudae-controls">
+      <div class="sudae-control-group">
+        <label for="sudae-text-{{ block.id }}">Custom Text:</label>
+          type="text" 
+          id="sudae-text-{{ block.id }}" 
+          class="sudae-text-input"
+          placeholder="Enter your custom text..."
+          maxlength="50">
+      </div>
+
+      <button 
+        class="sudae-add-to-cart" 
+        data-block-id="{{ block.id }}"
+        data-product-id="{{ product.selected_or_first_available_variant.id }}">
+        Add to Cart with Design
+      </button>
+    </div>
+  {% else %}
+        {%- comment -%}
+          Sudae 3D Viewer Block
+        {%- endcomment -%}
+
+        <div id="sudae-3d-viewer-block" data-product-id="{{ product.id }}">
+          <div class="sudae-3d-viewer-container">
+            <!-- 3D Viewer will be injected here by the app -->
+          </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer.min.js"></script>
+        <script>
+          // Placeholder for 3D viewer initialization
+          // The app extension JS will target #sudae-3d-viewer-block
+        </script>
+  .sudae-controls {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+
+  .sudae-control-group {
+    margin-bottom: 15px;
+  }
+
+  .sudae-control-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .sudae-text-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  .sudae-add-to-cart {
+    width: 100%;
+    padding: 12px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .sudae-add-to-cart:hover {
+    background-color: #333;
+  }
+
+  .sudae-placeholder {
+    padding: 40px;
+    text-align: center;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+  }
+
+  .sudae-ar-button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const addToCartButtons = document.querySelectorAll('.sudae-add-to-cart');
+    
+    addToCartButtons.forEach(button => {
+      button.addEventListener('click', async function() {
+        const blockId = this.dataset.blockId;
+        const productId = this.dataset.productId;
+        const textInput = document.getElementById(`sudae-text-${blockId}`);
+        const customText = textInput?.value || '';
+
+        const formData = new FormData();
+        formData.append('items[0][id]', productId);
+        formData.append('items[0][quantity]', '1');
+        formData.append('items[0][properties][_DesignText]', customText);
+        formData.append('items[0][properties][_App]', 'Sudae 3D Builder');
+
+        try {
+          const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            body: formData
+          });
+
+          if (response.ok) {
+            window.location.href = window.Shopify.routes.root + 'cart';
+          } else {
+            alert('Failed to add item to cart. Please try again.');
+          }
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+          alert('An error occurred. Please try again.');
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "3D Viewer Block",
+  "settings": [
+    {
+      "type": "text",
+      "id": "model_url",
+      "label": "3D Model URL",
+      "placeholder": "https://example.com/model.glb",
+      "info": "GLB or GLTF 3D model URL"
+    },
+    {
+      "type": "number",
+      "id": "viewer_height",
+      "label": "Viewer Height (px)",
+      "default": 500,
+      "min": 300,
+      "max": 1000
+    }
+  ],
+  "presets": [
+    {
+      "name": "3D Viewer"
+    }
+  ]
+}
+{% endschema %}
+=======
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
 {% assign config = block.settings %}
@@ -178,3 +357,4 @@
   ]
 }
 {% endschema %}
+>>>>>>> b5fd2864f1e33eb683055940581ca724360e508e
