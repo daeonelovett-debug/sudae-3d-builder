@@ -7,7 +7,8 @@
     "dev": "shopify app dev",
     "build": "npx remix build",
     "start": "npx remix-serve ./build/index.js",
-    "deploy": "shopify app deploy"
+    "deploy": "shopify app deploy",
+    "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^4.13.0",
