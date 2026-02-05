@@ -7,6 +7,16 @@ export interface DesignData {
   customText?: string;
 }
 
+// Helper function to safely parse JSON
+function safeJsonParse(jsonString: string, fallback: any = {}): any {
+  try {
+    return JSON.parse(jsonString);
+  } catch (error) {
+    console.error("Failed to parse JSON:", error);
+    return fallback;
+  }
+}
+
 class DesignService {
   async getDesigns(shop: string) {
     try {
@@ -17,7 +27,7 @@ class DesignService {
       // Parse JSON strings back to objects
       return designs.map((design) => ({
         ...design,
-        data: JSON.parse(design.data),
+        data: safeJsonParse(design.data),
       }));
     } catch (error) {
       console.error("Error fetching designs:", error);
@@ -39,7 +49,7 @@ class DesignService {
       // Parse the data back to object for return value
       return {
         ...design,
-        data: JSON.parse(design.data),
+        data: safeJsonParse(design.data),
       };
     } catch (error) {
       console.error("Error saving design:", error);
@@ -70,7 +80,7 @@ class DesignService {
       // Parse JSON string back to object
       return {
         ...design,
-        data: JSON.parse(design.data),
+        data: safeJsonParse(design.data),
       };
     } catch (error) {
       console.error("Error fetching design:", error);
