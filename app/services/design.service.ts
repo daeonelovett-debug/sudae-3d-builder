@@ -14,7 +14,11 @@ class DesignService {
         where: { shop },
         orderBy: { createdAt: "desc" },
       });
-      return designs;
+      // Parse JSON strings back to objects
+      return designs.map((design) => ({
+        ...design,
+        data: JSON.parse(design.data),
+      }));
     } catch (error) {
       console.error("Error fetching designs:", error);
       throw new Error("Failed to fetch designs");
@@ -29,10 +33,14 @@ class DesignService {
           name: designData.name,
           modelUrl: designData.modelUrl,
           customText: designData.customText,
-          data: designData.data,
+          data: JSON.stringify(designData.data),
         },
       });
-      return design;
+      // Parse the data back to object for return value
+      return {
+        ...design,
+        data: JSON.parse(design.data),
+      };
     } catch (error) {
       console.error("Error saving design:", error);
       throw new Error("Failed to save design");
@@ -56,7 +64,14 @@ class DesignService {
       const design = await prisma.design.findFirst({
         where: { id: designId, shop },
       });
-      return design;
+      if (!design) {
+        return null;
+      }
+      // Parse JSON string back to object
+      return {
+        ...design,
+        data: JSON.parse(design.data),
+      };
     } catch (error) {
       console.error("Error fetching design:", error);
       throw new Error("Failed to fetch design");
