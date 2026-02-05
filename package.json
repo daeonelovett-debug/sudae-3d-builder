@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "shopify app dev",
     "build": "npx remix build",
-    "start": "npx remix-serve ./build/index.js",
+    "start": "remix-serve ./build/index.js",
     "deploy": "shopify app deploy"
   },
   "dependencies": {
@@ -29,8 +29,7 @@
     "@types/react-dom": "^18.2.0",
     "remix": "^2.17.4",
     "remix-serve": "^1.0.3",
-    "typescript": "^5.0.0",
-    "remix": "^2.8.0"
+    "typescript": "^5.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
