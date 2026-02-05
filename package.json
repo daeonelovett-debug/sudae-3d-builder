@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "shopify app dev",
-    "build": "remix build",
+    "build": "npx remix build",
     "start": "npx remix-serve ./build/index.js",
     "deploy": "shopify app deploy"
   },
