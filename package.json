@@ -10,7 +10,7 @@
     "deploy": "shopify app deploy"
   },
   "dependencies": {
-    "@prisma/client": "^5.0.0",
+    "@prisma/client": "^4.13.0",
     "@remix-run/dev": "^2.8.0",
     "@remix-run/express": "^2.8.0",
     "@remix-run/node": "^2.8.0",
